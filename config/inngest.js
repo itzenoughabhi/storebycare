@@ -1,15 +1,15 @@
 import { Inngest } from "inngest";
 import connectDB from "./db";
-import User from "./models/User"; // <-- make sure you import your User model
+import User from "./models/User"; // Ensure this path is correct
 
-// Create a client to send and receive events
+// Create Inngest client
 export const inngest = new Inngest({ id: "storebycare" });
 
 /**
  * Sync User Creation (Clerk -> DB)
  */
 export const syncUserCreation = inngest.createFunction(
-  { id: "sync-user-from-clerk" },
+  { id: "storebycare-sync-user-created" }, // Unique ID
   { event: "clerk/user.created" },
   async ({ event }) => {
     const { id, first_name, last_name, email_addresses, image_url } = event.data;
@@ -31,7 +31,7 @@ export const syncUserCreation = inngest.createFunction(
  * Sync User Update (Clerk -> DB)
  */
 export const syncUserUpdate = inngest.createFunction(
-  { id: "update-user-from-clerk" },
+  { id: "storebycare-sync-user-updated" }, // Unique ID
   { event: "clerk/user.updated" },
   async ({ event }) => {
     const { id, first_name, last_name, email_addresses, image_url } = event.data;
@@ -51,7 +51,7 @@ export const syncUserUpdate = inngest.createFunction(
  * Sync User Deletion (Clerk -> DB)
  */
 export const syncUserDeletion = inngest.createFunction(
-  { id: "delete-user-from-clerk" },
+  { id: "storebycare-sync-user-deleted" }, // Unique ID
   { event: "clerk/user.deleted" },
   async ({ event }) => {
     const { id } = event.data;
