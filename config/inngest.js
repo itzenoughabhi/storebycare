@@ -1,6 +1,6 @@
 import { Inngest } from "inngest";
 import connectDB from "./db";
-import User from "./models/User"; // Ensure this path is correct
+import User from "./models/User"; // Make sure this path is correct
 
 // Create Inngest client
 export const inngest = new Inngest({ id: "storebycare" });
@@ -9,7 +9,7 @@ export const inngest = new Inngest({ id: "storebycare" });
  * Sync User Creation (Clerk -> DB)
  */
 export const syncUserCreation = inngest.createFunction(
-  { id: "storebycare-sync-user-created" }, // Unique ID
+  { id: "sync-user-created" }, // simple, unique ID
   { event: "clerk/user.created" },
   async ({ event }) => {
     const { id, first_name, last_name, email_addresses, image_url } = event.data;
@@ -31,7 +31,7 @@ export const syncUserCreation = inngest.createFunction(
  * Sync User Update (Clerk -> DB)
  */
 export const syncUserUpdate = inngest.createFunction(
-  { id: "storebycare-sync-user-updated" }, // Unique ID
+  { id: "sync-user-updated" }, // simple, unique ID
   { event: "clerk/user.updated" },
   async ({ event }) => {
     const { id, first_name, last_name, email_addresses, image_url } = event.data;
@@ -51,7 +51,7 @@ export const syncUserUpdate = inngest.createFunction(
  * Sync User Deletion (Clerk -> DB)
  */
 export const syncUserDeletion = inngest.createFunction(
-  { id: "storebycare-sync-user-deleted" }, // Unique ID
+  { id: "sync-user-deleted" }, // simple, unique ID
   { event: "clerk/user.deleted" },
   async ({ event }) => {
     const { id } = event.data;
