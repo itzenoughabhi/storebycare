@@ -8,6 +8,9 @@ export const { GET, POST, PUT } = serve({
     syncUserUpdate,       // make sure to include all needed functions
     syncUserDeletion
   ],
+  onError: (error) => {
+    console.error("Inngest API route error:", error);
+  }
 });
 import connectDB from "@/config/db";
-connectDB(); // Ensure DB is connected when this module is loaded 
+connectDB(); // Ensure DB is connected when this module is loaded

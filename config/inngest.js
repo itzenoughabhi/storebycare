@@ -27,7 +27,8 @@ export const syncUserCreation = inngest.createFunction(
       await User.create(userdata);
       console.log(`User created successfully: ${id}`);
     } catch (error) {
-      console.error(`Error creating user: ${error.message}`);
+      console.error(`Error creating user: ${error.message}`, error);
+      console.error("Full error details:", error);
       throw error; // Re-throw to mark function as failed
     }
   }
@@ -53,7 +54,8 @@ export const syncUserUpdate = inngest.createFunction(
       await User.findByIdAndUpdate(id, userdata, { new: true });
       console.log(`User updated successfully: ${id}`);
     } catch (error) {
-      console.error(`Error updating user: ${error.message}`);
+      console.error(`Error updating user: ${error.message}`, error);
+      console.error("Full error details:", error);
       throw error; // Re-throw to mark function as failed
     }
   }
@@ -73,7 +75,8 @@ export const syncUserDeletion = inngest.createFunction(
       await User.findByIdAndDelete(id);
       console.log(`User deleted successfully: ${id}`);
     } catch (error) {
-      console.error(`Error deleting user: ${error.message}`);
+      console.error(`Error deleting user: ${error.message}`, error);
+      console.error("Full error details:", error);
       throw error; // Re-throw to mark function as failed
     }
   }
