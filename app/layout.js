@@ -8,7 +8,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 const outfit = Outfit({ subsets: ['latin'], weight: ["300", "400", "500"] })
 
 export const metadata = {
-  title: "storebycare - GreatStack",
+  title: "storebycare -",
   description: "E-Commerce with Next.js ",
 };
 
