@@ -1,6 +1,6 @@
 import { Inngest } from "inngest";
 import connectDB from "./db";
-import User from "./models/User"; // Make sure this path is correct
+import User from "../models/User"; // Make sure this path is correct
 
 // Create Inngest client
 export const inngest = new Inngest({ id: "storebycare" });
@@ -15,7 +15,7 @@ export const syncUserCreation = inngest.createFunction(
     const { id, first_name, last_name, email_addresses, image_url } = event.data;
 
     const userdata = {
-      _id: id,
+      id: id,
       name: `${first_name} ${last_name}`,
       email: email_addresses?.[0]?.email_address,
       imageurl: image_url,
@@ -43,7 +43,7 @@ export const syncUserUpdate = inngest.createFunction(
     };
 
     await connectDB();
-    await User.findByIdAndUpdate(id, userdata, { new: true });
+    await User.findOneAndUpdate({ id: id }, userdata, { new: true });
   }
 );
 
@@ -57,6 +57,6 @@ export const syncUserDeletion = inngest.createFunction(
     const { id } = event.data;
 
     await connectDB();
-    await User.findByIdAndDelete(id);
+    await User.findOneAndDelete({ id: id });
   }
 );

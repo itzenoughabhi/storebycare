@@ -35,23 +35,41 @@ export const AppContextProvider = (props) => {
 
     const fetchUserData = async () => {
         try {
-            if (user.publicMetadata.role === "seller") {
+            // Check if user is properly loaded from Clerk
+            if (!user || !user.id) {
+                console.log("User not ready yet, skipping fetch");
+                return;
+            }
+
+            if (user?.publicMetadata?.role === "seller") {
                 setIsSeller(true)
             }
 
-            const Token = await getToken()
-            const { data } = await axios.get('/api/user/data', { headers: { Authorization: `Bearer ${Token}` } })
+            console.log("Fetching user data for:", user.id);
+
+            // Always get the token and send it with the request
+            const token = await getToken();
+            console.log("Got token:", !!token);
+            
+            const headers = token ? { Authorization: `Bearer ${token}` } : {};
+            
+            const { data } = await axios.get('/api/user/data', { headers })
+            console.log("API Response:", data);
+            
             if (data.success) {
                 setUserData(data.user)
-                setCartItems(data.user.cartItems)
-            }
-            else {
+                setCartItems(data.user.cartItem || {})
+            } else {
+                console.log("API Error:", data.message);
+                console.log("Debug info:", data.debug);
                 toast.error(data.message)
             }
 
 
         } catch (error) {
-            toast.error(error.message)
+            console.error("Fetch user data error:", error);
+            console.error("Error response:", error.response?.data);
+            toast.error(error.response?.data?.message || error.message)
         }
     }
 
