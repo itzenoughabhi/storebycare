@@ -24,7 +24,7 @@ export const AppContextProvider = (props) => {
 
     const [products, setProducts] = useState([])
     const [userData, setUserData] = useState(false)
-    const [isSeller, setIsSeller] = useState(false)
+    const [isSeller, setIsSeller] = useState(true)
     const [cartItems, setCartItems] = useState({})
 
 

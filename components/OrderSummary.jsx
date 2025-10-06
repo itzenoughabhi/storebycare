@@ -19,9 +19,20 @@ const OrderSummary = () => {
     setIsDropdownOpen(false);
   };
 
-  const createOrder = async () => {
-
+  const createOrder = () => {
+  // 1️⃣ Validate that an address is selected
+  if (!selectedAddress) {
+    alert("Please select a shipping address");
+    return;
   }
+
+  // 2️⃣ (Optional) Call your API to create the order
+  // await createOrderAPI(selectedAddress, cartItems, etc.)
+
+  // 3️⃣ Navigate to OrderPlaced page
+  router.push('/order-placed');
+};
+
 
   useEffect(() => {
     fetchUserAddresses();
@@ -115,9 +126,12 @@ const OrderSummary = () => {
         </div>
       </div>
 
-      <button onClick={createOrder} className="w-full bg-orange-600 text-white py-3 mt-5 hover:bg-orange-700">
-        Place Order
-      </button>
+      <button
+  onClick={createOrder}
+  className="w-full bg-orange-600 text-white py-3 mt-5 rounded-md hover:bg-orange-700"
+>
+  Place Order
+</button>
     </div>
   );
 };
